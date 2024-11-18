@@ -1,0 +1,5 @@
+rootProject.name = 'crop'
+include 'core'
+include 'service-api'
+//include 'service-kafka'
+//include 'service-summary'

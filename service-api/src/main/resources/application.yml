@@ -1,0 +1,19 @@
+spring.application.name: service-api-local
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/crop?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    username: root
+    password: p@ssWord
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+#Swagger
+springdoc:
+  swagger-ui:
+    path: /swagger
