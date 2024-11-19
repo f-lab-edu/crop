@@ -33,4 +33,9 @@ public class SensorController {
     public SensorResponse update(@Validated @RequestBody SensorUpdateRequest request) {
         return sensorService.update(request);
     }
+
+    @DeleteMapping
+    public List<SensorResponse> delete(@RequestParam("id") String[] request) {
+        return sensorService.delete(request);
+    }
 }

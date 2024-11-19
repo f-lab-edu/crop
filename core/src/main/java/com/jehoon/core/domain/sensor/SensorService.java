@@ -8,7 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -50,15 +52,19 @@ public class SensorService {
                 .orElseThrow(() -> new RuntimeException("ID 값을 가진 센서가 존재하지 않습니다"));
 
         updateTarget.setName(request.getName());
-        updateTarget.setName(request.getType());
+        updateTarget.setType(request.getType());
 
         return SensorResponse.fromEntity(updateTarget);
     }
 
-    public SensorResponse delete(String id) {
-        var deleteTarget = sensorRepository.findById(id)
+    public SensorResponse delete(String request) {
+        var deleteTarget = sensorRepository.findById(request)
                 .orElseThrow(() -> new RuntimeException("ID 값을 가진 센서가 존재하지 않습니다"));
         sensorRepository.delete(deleteTarget);
         return SensorResponse.fromEntity(deleteTarget);
+    }
+
+    public List<SensorResponse> delete(String... request) {
+        return Arrays.stream(request).map(this::delete).collect(Collectors.toList());
     }
 }

@@ -3,7 +3,7 @@ package com.jehoon.serviceapi;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.jehoon")
 public class ServiceApiApplication {
 
     public static void main(String[] args) {
