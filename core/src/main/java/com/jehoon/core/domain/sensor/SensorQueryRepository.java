@@ -16,16 +16,18 @@ public class SensorQueryRepository {
     public List<Sensor> select(SensorSelectRequest request) {
         var qSensor = QSensor.sensor;
 
+        var sensorQueryExpression = new SensorQueryExpression(qSensor);
+
         return queryFactory
                 .select(qSensor)
                 .from(qSensor)
                 .where(
-                        qSensor.id.in(request.getId()),
-                        qSensor.name.in(request.getName()),
-                        qSensor.type.in(request.getType()),
-                        qSensor.id.containsIgnoreCase(request.getLikeId()),
-                        qSensor.name.containsIgnoreCase(request.getLikeName()),
-                        qSensor.type.containsIgnoreCase(request.getLikeType())
+                        sensorQueryExpression.inId(request.getId()),
+                        sensorQueryExpression.inName(request.getName()),
+                        sensorQueryExpression.inType(request.getType()),
+                        sensorQueryExpression.likeId(request.getLikeId()),
+                        sensorQueryExpression.likeName(request.getLikeName()),
+                        sensorQueryExpression.likeType(request.getLikeType())
                 )
                 .fetch();
     }
