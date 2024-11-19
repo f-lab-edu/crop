@@ -1,5 +1,6 @@
 package com.jehoon.core.domain.sensor;
 
+import com.jehoon.core.common.CommonRollbackException;
 import com.jehoon.core.domain.sensor.dto.SensorCreateRequest;
 import com.jehoon.core.domain.sensor.dto.SensorResponse;
 import com.jehoon.core.domain.sensor.dto.SensorSelectRequest;
@@ -39,7 +40,7 @@ public class SensorService {
         sensorRepository
                 .findById(createTarget.getId())
                 .ifPresent(sensor -> {
-                    throw new RuntimeException("이미 존재하는 ID 입니다");
+                    throw new CommonRollbackException("이미 존재하는 ID 입니다");
                 });
 
         sensorRepository.save(createTarget);
@@ -49,7 +50,7 @@ public class SensorService {
 
     public SensorResponse update(SensorUpdateRequest request) {
         var updateTarget = sensorRepository.findById(request.getId())
-                .orElseThrow(() -> new RuntimeException("ID 값을 가진 센서가 존재하지 않습니다"));
+                .orElseThrow(() -> new CommonRollbackException("ID 값을 가진 센서가 존재하지 않습니다"));
 
         updateTarget.setName(request.getName());
         updateTarget.setType(request.getType());
@@ -59,7 +60,7 @@ public class SensorService {
 
     public SensorResponse delete(String request) {
         var deleteTarget = sensorRepository.findById(request)
-                .orElseThrow(() -> new RuntimeException("ID 값을 가진 센서가 존재하지 않습니다"));
+                .orElseThrow(() -> new CommonRollbackException("ID 값을 가진 센서가 존재하지 않습니다"));
         sensorRepository.delete(deleteTarget);
         return SensorResponse.fromEntity(deleteTarget);
     }
